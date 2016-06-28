@@ -6,14 +6,35 @@ function Account(id, name, password) {
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 var table = $('#tbl-account').DataTable({
-	responsive : true
+	serverSide : true,
+	start : 0,
+	length : 50,
+
+	ajax : {
+		type : 'POST',
+		url : '/DemoJSON/accounts',
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		data : {
+			draw : 1,
+			length : 100
+		}
+	},
+	columns : [ {
+		"data" : "id"
+	}, {
+		"data" : "name"
+	}, {
+		"data" : "password"
+	} ]
 });
 var action_command = "";
 var currentAccount;
 
 $(document).ready(function() {
 	// get all account data, pull into table
-	requestAccounts();
+	// requestAccounts();
 
 	// click on order, show edit modal
 	$('#tbl-account tbody').on('click', 'tr', function() {

@@ -46,7 +46,7 @@ public class AccountDAOImpl extends JdbcDaoSupport implements AccountDAO {
 	}
 
 	public List<Account> selectAll() {
-		String sql = "SELECT * FROM account ORDER BY account_id LIMIT 50";
+		String sql = "SELECT * FROM account ORDER BY account_id LIMIT 1000";
 		AccountMapper mapper = new AccountMapper();
 		try {
 			return this.getJdbcTemplate().query(sql, mapper);

@@ -1,6 +1,6 @@
 package training.demojson.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import training.demojson.common.Constant;
 import training.demojson.domain.Account;
 import training.demojson.domain.AccountDAO;
+import training.demojson.service.AccountService;
 
 @org.springframework.stereotype.Controller
 public class Controller {
 	public static final Logger logger = LogManager.getLogger(Controller.class);
 	@Autowired
 	private AccountDAO accountDAO;
+	@Autowired
+	private AccountService accService;
 
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String home() {
@@ -50,8 +53,7 @@ public class Controller {
 	 * @return page name
 	 */
 	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
-	public String loginPage(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String msg, org.springframework.ui.Model model) {
+	public String loginPage(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String msg, org.springframework.ui.Model model) {
 		logger.entry();
 		if (error != null) {
 			model.addAttribute("error", Constant.LOGIN_FAIL);
@@ -65,11 +67,10 @@ public class Controller {
 	}
 
 	@RequestMapping(value = { "/accounts" }, method = RequestMethod.POST)
-	public @ResponseBody List<Account> getAccounts() {
+	public @ResponseBody Map<String, Object> getAccounts() {
 		logger.entry();
-		List<Account> accounts = accountDAO.selectAll();
-		logger.debug(accounts.size());
-		return accounts;
+		Map<String, Object> callbackData = accService.getDataServerSide();
+		return callbackData;
 	}
 
 	@RequestMapping(value = { "/accounts/delete" }, method = RequestMethod.POST)
