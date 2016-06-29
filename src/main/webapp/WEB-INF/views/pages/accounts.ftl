@@ -38,7 +38,7 @@
 	                <div class="panel-body">
 	                	<div>
 	                		<input type="text" placeholder="text to search" name="key" required="" autofocus="" id="search-key">
-	                		<button class="btn btn-primary" onClick="searchAccount()">Search </button>
+	                		<button class="btn btn-default" onClick="searchAccount()">Search </button>
 		                </div><br/>
 						<table id="tbl-account" class="table table-striped table-bordered table-hover tbl-responsive">
 		                    <thead>
@@ -104,6 +104,10 @@
 					    
 					    <button type="button" class="btn btn-success" onClick="updateAccount()" data-dismiss="modal">
 					     	<i class="fa fa-check"></i>Update
+					    </button>
+					    
+					    <button type="button" class="btn btn-primary" onClick="downloadAccount()" data-dismiss="modal">
+					     	<i class="fa fa-check"></i>Download
 					    </button>
 					    
 					    <button id="reject" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -196,6 +200,7 @@
 
 	<!-- DataTables JavaScript -->
     <script src="/DemoJSON/resources/bower_components/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="/DemoJSON/resources/bower_components/file-saver/FileSaver.min.js"></script>
 	<script src="/DemoJSON/resources/js/account.js"></script>
 </#macro>
 <!-- code shown here -->

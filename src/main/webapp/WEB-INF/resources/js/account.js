@@ -145,6 +145,15 @@ function updateAccount() {
 	action_command = "UPDATE_ACCOUNT";
 	showConfirmModal("Do you want to update this account?");
 }
+function downloadAccount() {
+	var fileName = currentAccount.id + ".json";
+	var content = JSON.stringify(currentAccount);
+	var file = new File([ content ], fileName, {
+		type : "text/plain;charset=utf-8"
+	});
+	saveAs(file);
+}
+
 function addAccount() {
 	name = $('#modal-add-account td.edit-name input').val();
 	password = $('#modal-add-account td.edit-password input').val();
