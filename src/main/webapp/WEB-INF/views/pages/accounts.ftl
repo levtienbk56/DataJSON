@@ -36,6 +36,10 @@
 	                </div>
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
+	                	<div>
+	                		<input type="text" placeholder="text to search" name="key" required="" autofocus="" id="search-key">
+	                		<button class="btn btn-primary" onClick="searchAccount()">Search </button>
+		                </div><br/>
 						<table id="tbl-account" class="table table-striped table-bordered table-hover tbl-responsive">
 		                    <thead>
 		                        <tr>
@@ -45,9 +49,13 @@
 		                        </tr>
 		                    </thead>
 		                    <tbody>
-		                    	
 		                    </tbody>
 		                 </table>
+		                 <span>
+		                 	<button class="btn btn-primary" onClick="pagingSearch('lt')" id="btn-previous">&lt</button>
+							showing <a id="offset-from"></a>-<a id="offset-to"></a> of <a id="records-total"></a>		                 	
+		                 	<button class="btn btn-primary" onClick="pagingSearch('gt')" id="btn-next">&gt </button>
+		                 </span>
 		             </div>
 		         </div>
 			</div>

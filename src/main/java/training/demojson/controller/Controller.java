@@ -1,5 +1,6 @@
 package training.demojson.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -42,6 +43,13 @@ public class Controller {
 		return "pages/error404";
 	}
 
+	@RequestMapping(value = { "/accounts/search" }, method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> searchAccount(@RequestParam String key, @RequestParam int page, @RequestParam int limit) {
+		logger.entry(key, page, limit);
+
+		return accService.search(key, page, limit);
+	}
+
 	/**
 	 * login function use Spring security with notification message.
 	 * 
@@ -67,10 +75,11 @@ public class Controller {
 	}
 
 	@RequestMapping(value = { "/accounts" }, method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> getAccounts() {
+	public @ResponseBody List<Account> getAccounts() {
 		logger.entry();
-		Map<String, Object> callbackData = accService.getDataServerSide();
-		return callbackData;
+		// Map<String, Object> callbackData = accService.getDataServerSide();
+
+		return accountDAO.selectAll();
 	}
 
 	@RequestMapping(value = { "/accounts/delete" }, method = RequestMethod.POST)

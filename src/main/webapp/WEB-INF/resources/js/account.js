@@ -5,36 +5,17 @@ function Account(id, name, password) {
 }
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
-var table = $('#tbl-account').DataTable({
-	serverSide : true,
-	start : 0,
-	length : 50,
 
-	ajax : {
-		type : 'POST',
-		url : '/DemoJSON/accounts',
-		beforeSend : function(xhr) {
-			xhr.setRequestHeader(header, token);
-		},
-		data : {
-			draw : 1,
-			length : 100
-		}
-	},
-	columns : [ {
-		"data" : "id"
-	}, {
-		"data" : "name"
-	}, {
-		"data" : "password"
-	} ]
+var table = $('#tbl-account').DataTable({
+	processing : true,
+	searching : false,
+	paging : false,
+	info : false,
 });
-var action_command = "";
-var currentAccount;
 
 $(document).ready(function() {
 	// get all account data, pull into table
-	// requestAccounts();
+	requestSearch();
 
 	// click on order, show edit modal
 	$('#tbl-account tbody').on('click', 'tr', function() {
@@ -60,6 +41,92 @@ $(document).ready(function() {
 		$('#modal-add-account').modal('show');
 	});
 });
+
+/** ************************************ */
+/** ************************************ */
+var page = 1;
+var limit = 10;
+var key = "";
+
+/* onClick search */
+function searchAccount() {
+	key = $('input#search-key').val();
+	page = 1;
+	limit = 10;
+	requestSearch();
+}
+
+/* paging onClicked */
+function pagingSearch(a) {
+	if (a == 'lt') {
+		page -= 1;
+	} else if (a == 'gt') {
+		page += 1;
+	}
+
+	if (page > 0) {
+		requestSearch();
+	}
+}
+
+/* request AJAX */
+function requestSearch() {
+	$.ajax({
+		type : 'POST',
+		url : '/DemoJSON/accounts/search',
+		data : {
+			"key" : key,
+			"page" : page,
+			"limit" : limit,
+		},
+		timeout : 10000,
+		beforeSend : function(xhr) {
+			xhr.setRequestHeader(header, token);
+		},
+		success : function(data) {
+			console.log(data);
+			var tbldata = data.data;
+			var totalRecord = parseInt(data.totalRecord);
+			var totalRecordFiltered = parseInt(data.totalRecordFiltered);
+
+			// clear current table, push new data
+			table.clear().draw();
+			if (tbldata != null) {
+				for (i = 0; i < tbldata.length; i++) {
+					table.row.add([ tbldata[i].id, tbldata[i].name, tbldata[i].password ]).draw();
+				}
+			}
+
+			// change paging
+			var offsetFrom = (page - 1) * limit + 1;
+			var offsetTo = offsetFrom + totalRecordFiltered - 1;
+			$('#offset-from').text(offsetFrom);
+			$('#offset-to').text(offsetTo);
+			$('#records-total').text(totalRecord);
+
+			if (page > 1) {
+				$('#btn-previous').prop("disabled", false);
+			} else {
+				$('#btn-previous').prop("disabled", true);
+			}
+			if (page * limit < totalRecord) {
+				$('#btn-next').prop("disabled", false);
+			} else {
+				$('#btn-next').prop("disabled", true);
+			}
+
+		},
+		error : function(data) {
+			console.log(data);
+		}
+	});
+}
+
+/** ************************************ */
+/** ************************************ */
+
+var action_command = "";
+var currentAccount;
 
 function deleteAccount() {
 	action_command = "DELETE_ACCOUNT";
@@ -98,30 +165,6 @@ function commandConfirmed() {
 	} else if (action_command == "ADD_ACCOUNT") {
 		requestAddAccount();
 	}
-}
-function requestAccounts() {
-	$.ajax({
-		type : 'POST',
-		url : '/DemoJSON/accounts',
-		timeout : 10000,
-		beforeSend : function(xhr) {
-			xhr.setRequestHeader(header, token);
-		},
-		success : function(data) {
-			console.log(data.length);
-			// clear current table
-			table.clear().draw();
-			if (data != null) {
-				for (i = 0; i < data.length; i++) {
-					table.row.add([ data[i].id, data[i].name, data[i].password ]).draw();
-
-				}
-			}
-		},
-		error : function(data) {
-			console.log(data);
-		}
-	});
 }
 
 function requestDeleteAccount() {

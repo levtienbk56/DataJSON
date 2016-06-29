@@ -1,5 +1,6 @@
 package training.demojson.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -46,7 +47,7 @@ public class AccountDAOImpl extends JdbcDaoSupport implements AccountDAO {
 	}
 
 	public List<Account> selectAll() {
-		String sql = "SELECT * FROM account ORDER BY account_id LIMIT 1000";
+		String sql = "SELECT * FROM account ORDER BY account_id LIMIT 5";
 		AccountMapper mapper = new AccountMapper();
 		try {
 			return this.getJdbcTemplate().query(sql, mapper);
@@ -75,4 +76,27 @@ public class AccountDAOImpl extends JdbcDaoSupport implements AccountDAO {
 		}
 	}
 
+	public List<Account> search(String key, int offset, int limit) {
+		List<Account> list = new ArrayList<Account>();
+		String sql = "select * FROM account WHERE name LIKE ('%' || ? || '%') ORDER BY (account_id) LIMIT ? OFFSET ?";
+		Object[] params = new Object[] { key, limit, offset };
+		AccountMapper mapper = new AccountMapper();
+		try {
+			list = this.getJdbcTemplate().query(sql, params, mapper);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public int searchCount(String key) {
+		String sql = "select count (account_id) FROM account WHERE name LIKE ('%' || ? || '%')";
+		Object[] params = new Object[] { key };
+		try {
+			return this.getJdbcTemplate().queryForObject(sql, params, Integer.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
 }

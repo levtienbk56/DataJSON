@@ -13,4 +13,8 @@ public interface AccountDAO {
 
 	Account selectAccount(int id);
 
+	List<Account> search(String key, int offset, int limit);
+
+	int searchCount(String key);
+
 }
