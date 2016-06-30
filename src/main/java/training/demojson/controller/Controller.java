@@ -27,19 +27,19 @@ public class Controller {
 	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
 	public String home() {
 		logger.entry();
-		return "pages/accounts";
+		return "pages/account/accounts";
 	}
 
 	@RequestMapping(value = { "/403" }, method = RequestMethod.GET)
 	public String error403() {
 		logger.entry();
-		return "pages/error403";
+		return "pages/error/error403";
 	}
 
 	@RequestMapping(value = { "/404" }, method = RequestMethod.GET)
 	public String error404() {
 		logger.entry();
-		return "pages/error404";
+		return "pages/error/error404";
 	}
 
 	@RequestMapping(value = { "/accounts/search" }, method = RequestMethod.POST)
@@ -70,7 +70,7 @@ public class Controller {
 		}
 
 		logger.exit(msg);
-		return "pages/login";
+		return "pages/login/login";
 	}
 
 	@RequestMapping(value = { "/accounts/delete" }, method = RequestMethod.POST)
