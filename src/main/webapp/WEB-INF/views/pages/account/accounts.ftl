@@ -61,7 +61,7 @@
 		                 </table>
 		                 <span>
 		                 	<button class="btn btn-primary" onClick="pagingSearch('lt')" id="btn-previous">&lt</button>
-							showing <a id="offset-from"></a>-<a id="offset-to"></a> of <a id="records-total"></a>		                 	
+							<span id="paging-info"> showing <a id="offset-from"></a> - <a id="offset-to"></a> of <a id="records-total"></a> </span>		                 	
 		                 	<button class="btn btn-primary" onClick="pagingSearch('gt')" id="btn-next">&gt </button>
 		                 </span>
 		             </div>
@@ -84,5 +84,6 @@
     <script src="/DemoJSON/resources/bower_components/file-saver/FileSaver.min.js"></script>
 	<script src="/DemoJSON/resources/js/account.js"></script>
 </#macro>
+
 <!-- code shown here -->
 <@display/>

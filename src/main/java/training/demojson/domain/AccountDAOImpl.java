@@ -90,7 +90,7 @@ public class AccountDAOImpl extends JdbcDaoSupport implements AccountDAO {
 	}
 
 	public int searchCount(String key) {
-		String sql = "select count (account_id) FROM account WHERE name LIKE ('%' || ? || '%')";
+		String sql = "select count (account_id) FROM account WHERE LOWER(name) LIKE ('%' || ? || '%')";
 		Object[] params = new Object[] { key };
 		try {
 			return this.getJdbcTemplate().queryForObject(sql, params, Integer.class);

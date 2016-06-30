@@ -90,7 +90,7 @@ function requestSearch() {
 			var totalRecord = parseInt(data.totalRecord);
 			var totalRecordFiltered = parseInt(data.totalRecordFiltered);
 
-			// clear current table, push new data
+			/** clear current table, push new data */
 			table.clear().draw();
 			if (tbldata != null) {
 				for (i = 0; i < tbldata.length; i++) {
@@ -98,24 +98,33 @@ function requestSearch() {
 				}
 			}
 
-			// change paging
-			var offsetFrom = (page - 1) * limit + 1;
-			var offsetTo = offsetFrom + totalRecordFiltered - 1;
-			$('#offset-from').text(offsetFrom);
-			$('#offset-to').text(offsetTo);
-			$('#records-total').text(totalRecord);
-
-			if (page > 1) {
-				$('#btn-previous').prop("disabled", false);
-			} else {
+			/** change paging */
+			// no records found
+			if (totalRecord == 0) {
+				$('#offset-from').text(0);
+				$('#offset-to').text(0);
+				$('#records-total').text(0);
 				$('#btn-previous').prop("disabled", true);
-			}
-			if (page * limit < totalRecord) {
-				$('#btn-next').prop("disabled", false);
-			} else {
 				$('#btn-next').prop("disabled", true);
-			}
+			} else {
+				// records found
+				var offsetFrom = (page - 1) * limit + 1;
+				var offsetTo = offsetFrom + totalRecordFiltered - 1;
+				$('#offset-from').text(offsetFrom);
+				$('#offset-to').text(offsetTo);
+				$('#records-total').text(totalRecord);
 
+				if (page > 1) {
+					$('#btn-previous').prop("disabled", false);
+				} else {
+					$('#btn-previous').prop("disabled", true);
+				}
+				if (page * limit < totalRecord) {
+					$('#btn-next').prop("disabled", false);
+				} else {
+					$('#btn-next').prop("disabled", true);
+				}
+			}
 		},
 		error : function(data) {
 			console.log(data);

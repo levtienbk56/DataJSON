@@ -46,7 +46,7 @@ public class Controller {
 	public @ResponseBody Map<String, Object> searchAccount(@RequestParam String key, @RequestParam int page, @RequestParam int limit) {
 		logger.entry(key, page, limit);
 
-		return accService.search(key, page, limit);
+		return logger.exit(accService.search(key, page, limit));
 	}
 
 	/**
