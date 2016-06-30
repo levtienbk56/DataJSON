@@ -19,19 +19,9 @@ public class AccountService {
 	@Autowired
 	AccountDAO accountDAO;
 
-	public Map<String, Object> getDataServerSide() {
-		Map<String, Object> callbackData = new HashMap<String, Object>();
-
-		List<Account> arr = accountDAO.selectAll();
-		callbackData.put("draw", 10);
-		callbackData.put("recordsTotal", arr.size());
-		callbackData.put("recordsFiltered", arr.size());
-		callbackData.put("data", arr);
-		return callbackData;
-	}
-
 	// TODO: chỉ query một đoạn, tách câu lệnh query tổng số riêng
 	public Map<String, Object> search(String key, int page, int limit) {
+		key = key.toLowerCase();
 		Map<String, Object> callbackData = new HashMap<String, Object>();
 
 		// total search result

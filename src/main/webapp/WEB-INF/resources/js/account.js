@@ -35,15 +35,16 @@ $(document).ready(function() {
 		$('#modal-edit-account td.edit-password input').val(pass);
 	});
 
-	// click add new account
+	// click add new account button
 	$('#btn-new-account').click(function() {
 		// get data from row table
 		$('#modal-add-account').modal('show');
 	});
 });
 
-/** ************************************ */
-/** ************************************ */
+/*******************************************************************************
+ * SEARCH
+ ******************************************************************************/
 var page = 1;
 var limit = 10;
 var key = "";
@@ -122,8 +123,9 @@ function requestSearch() {
 	});
 }
 
-/** ************************************ */
-/** ************************************ */
+/*******************************************************************************
+ * *********** INSERT UPDATE DELETE
+ ******************************************************************************/
 
 var action_command = "";
 var currentAccount;

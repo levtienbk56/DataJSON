@@ -36,10 +36,12 @@
 	                </div>
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
-	                	<div>
-	                		<input type="text" placeholder="text to search" name="key" required="" autofocus="" id="search-key">
-	                		<button class="btn btn-default" onClick="searchAccount()">Search </button>
-		                </div><br/>
+	                	<div  class="form-group row">
+	                		<div class="col-md-5">
+	                			<input type="text" class="form-control " placeholder="text to search" name="key" required="" autofocus="" id="search-key">
+	                		</div>
+	                			<button class="btn btn-default" onClick="searchAccount()">Search </button>
+		                </div>
 						<table id="tbl-account" class="table table-striped table-bordered table-hover tbl-responsive">
 		                    <thead>
 		                        <tr>

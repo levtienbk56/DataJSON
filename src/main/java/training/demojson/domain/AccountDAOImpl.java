@@ -78,7 +78,7 @@ public class AccountDAOImpl extends JdbcDaoSupport implements AccountDAO {
 
 	public List<Account> search(String key, int offset, int limit) {
 		List<Account> list = new ArrayList<Account>();
-		String sql = "select * FROM account WHERE name LIKE ('%' || ? || '%') ORDER BY (account_id) LIMIT ? OFFSET ?";
+		String sql = "select * FROM account WHERE LOWER(name) LIKE ('%' || ? || '%') ORDER BY (account_id) LIMIT ? OFFSET ?";
 		Object[] params = new Object[] { key, limit, offset };
 		AccountMapper mapper = new AccountMapper();
 		try {

@@ -1,6 +1,5 @@
 package training.demojson.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -72,14 +71,6 @@ public class Controller {
 
 		logger.exit(msg);
 		return "pages/login";
-	}
-
-	@RequestMapping(value = { "/accounts" }, method = RequestMethod.POST)
-	public @ResponseBody List<Account> getAccounts() {
-		logger.entry();
-		// Map<String, Object> callbackData = accService.getDataServerSide();
-
-		return accountDAO.selectAll();
 	}
 
 	@RequestMapping(value = { "/accounts/delete" }, method = RequestMethod.POST)

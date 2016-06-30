@@ -15,7 +15,6 @@
 		    margin-top: 100px;
 		}
 		.alert{
-			margin-top: 10px;
 			text-align:center;
 		}
 	</style>
@@ -26,13 +25,15 @@
     	<div class="center">
 			<form class="form-signin"  action="j_spring_security_check" method='POST'>
 				<h1 class="form-signin-heading text-muted text-center">Sign In</h1>
-				<input type="text" class="form-control" placeholder="Username" name="username" required="" autofocus="">
-				<input type="password" class="form-control" placeholder="Password"  name="password" required="">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Username" name="username" required="" autofocus="">
+					<input type="password" class="form-control" placeholder="Password"  name="password" required="">
+				</div>
 					<#if (error??)>
-						<div class="alert alert-warning"> ${error} </div>
+						<div class="alert alert-warning text-center"> ${error} </div>
 					</#if>
 					<#if (msg??)>
-						<div class="alert alert-success"> ${msg} </div>
+						<div class="alert alert-success text-center"> ${msg} </div>
 					</#if>
 				<button class="btn bn-lg btn-primary btn-block" type="submit">
 					Sign In
